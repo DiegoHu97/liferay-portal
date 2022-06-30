@@ -27,6 +27,8 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 
 <aui:model-context bean="<%= journalDisplayContext.getArticle() %>" model="<%= JournalArticle.class %>" />
 
+<aui:model-context bean="<%= journalEditArticleDisplayContext.getDDMStructure() %>" model="<%= DDMStructure.class %>" />
+
 <liferay-ui:error exception="<%= ArticleDisplayDateException.class %>" message="please-enter-a-valid-display-date" />
 <liferay-ui:error exception="<%= ArticleExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 
@@ -34,6 +36,8 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	<aui:input formName="fm1" name="displayDate" wrapperCssClass="mb-3" />
 
 	<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= journalEditArticleDisplayContext.isNeverExpire() %>" formName="fm1" name="expirationDate" wrapperCssClass="expiration-date mb-3" />
+
+	<aui:input disabled="<%= false %>" formName="fm1" name="modifiedDate" wrapperCssClass="expiration-date mb-3" />
 
 	<aui:input dateTogglerCheckboxLabel="never-review" disabled="<%= journalEditArticleDisplayContext.isNeverReview() %>" formName="fm1" name="reviewDate" wrapperCssClass="mb-3 review-date" />
 </div>

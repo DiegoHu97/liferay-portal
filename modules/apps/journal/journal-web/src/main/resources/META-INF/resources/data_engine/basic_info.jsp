@@ -51,3 +51,12 @@ if (ddmStructure != null) {
 
 	<aui:input name="webDavURL" type="resource" value="<%= ddmStructure.getWebDavURL(themeDisplay, WebDAVUtil.getStorageToken(portlet)) %>" />
 </c:if>
+
+<aui:model-context bean="<%= journalEditDDMStructuresDisplayContext.getDDMStructure() %>" model="<%= DDMStructure.class %>" />
+
+<liferay-ui:error exception="<%= ArticleDisplayDateException.class %>" message="please-enter-a-valid-display-date" />
+<liferay-ui:error exception="<%= ArticleExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
+
+<div class="schedule">
+	<aui:input dateTogglerCheckboxLabel="never-expire" formName="fm1" name="expirationDate" wrapperCssClass="expiration-date mb-3" />
+</div>

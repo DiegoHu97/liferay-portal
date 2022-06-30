@@ -36,6 +36,9 @@ components:
                     additionalProperties:
                         type: object
                     type: object
+                defaultExpirationDate:
+                    format: date
+                    type: string
                 id:
                     format: int64
                     type: integer

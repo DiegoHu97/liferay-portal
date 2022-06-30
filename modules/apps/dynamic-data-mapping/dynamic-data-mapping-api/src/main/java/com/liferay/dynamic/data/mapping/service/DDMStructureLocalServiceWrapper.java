@@ -61,6 +61,23 @@ public class DDMStructureLocalServiceWrapper
 			String structureKey,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
+			java.util.Date defaultExpirationDate, String definition,
+			String storageType,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddmStructureLocalService.addStructure(
+			userId, groupId, parentStructureId, classNameId, structureKey,
+			nameMap, descriptionMap, defaultExpirationDate, definition, storageType,
+			serviceContext);
+	}
+
+	@Override
+	public DDMStructure addStructure(
+			long userId, long groupId, long parentStructureId, long classNameId,
+			String structureKey,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
 			com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
 			com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 			String storageType, int type,
@@ -71,21 +88,6 @@ public class DDMStructureLocalServiceWrapper
 			userId, groupId, parentStructureId, classNameId, structureKey,
 			nameMap, descriptionMap, ddmForm, ddmFormLayout, storageType, type,
 			serviceContext);
-	}
-
-	@Override
-	public DDMStructure addStructure(
-			long userId, long groupId, long parentStructureId, long classNameId,
-			String structureKey,
-			java.util.Map<java.util.Locale, String> nameMap,
-			java.util.Map<java.util.Locale, String> descriptionMap,
-			String definition, String storageType,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmStructureLocalService.addStructure(
-			userId, groupId, parentStructureId, classNameId, structureKey,
-			nameMap, descriptionMap, definition, storageType, serviceContext);
 	}
 
 	@Override
@@ -1356,6 +1358,20 @@ public class DDMStructureLocalServiceWrapper
 			long userId, long structureId, long parentStructureId,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
+			java.util.Date defaultExpirationDate, String definition,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddmStructureLocalService.updateStructure(
+			userId, structureId, parentStructureId, nameMap, descriptionMap,
+			defaultExpirationDate, definition, serviceContext);
+	}
+
+	@Override
+	public DDMStructure updateStructure(
+			long userId, long structureId, long parentStructureId,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
 			com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
 			com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -1364,20 +1380,6 @@ public class DDMStructureLocalServiceWrapper
 		return _ddmStructureLocalService.updateStructure(
 			userId, structureId, parentStructureId, nameMap, descriptionMap,
 			ddmForm, ddmFormLayout, serviceContext);
-	}
-
-	@Override
-	public DDMStructure updateStructure(
-			long userId, long structureId, long parentStructureId,
-			java.util.Map<java.util.Locale, String> nameMap,
-			java.util.Map<java.util.Locale, String> descriptionMap,
-			String definition,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ddmStructureLocalService.updateStructure(
-			userId, structureId, parentStructureId, nameMap, descriptionMap,
-			definition, serviceContext);
 	}
 
 	@Override

@@ -125,6 +125,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -463,6 +464,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			LocalizedValueUtil.toLocaleStringMap(dataDefinition.getName()),
 			LocalizedValueUtil.toLocaleStringMap(
 				dataDefinition.getDescription()),
+			dataDefinition.getDefaultExpirationDate(),
 			ddmFormSerializerSerializeResponse.getContent(),
 			GetterUtil.getString(
 				dataDefinition.getStorageType(),
@@ -1464,6 +1466,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				LocalizedValueUtil.toLocaleStringMap(dataDefinition.getName()),
 				LocalizedValueUtil.toLocaleStringMap(
 					dataDefinition.getDescription()),
+				dataDefinition.getDefaultExpirationDate(),
 				ddmFormSerializerSerializeResponse.getContent(),
 				new ServiceContext()),
 			_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);

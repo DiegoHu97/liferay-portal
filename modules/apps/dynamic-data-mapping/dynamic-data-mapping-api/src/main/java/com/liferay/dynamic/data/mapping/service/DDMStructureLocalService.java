@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -95,8 +96,8 @@ public interface DDMStructureLocalService
 	public DDMStructure addStructure(
 			long userId, long groupId, long parentStructureId, long classNameId,
 			String structureKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, DDMForm ddmForm,
-			DDMFormLayout ddmFormLayout, String storageType, int type,
+			Map<Locale, String> descriptionMap, Date defaultExpirationDate,
+			String definition, String storageType,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -104,8 +105,9 @@ public interface DDMStructureLocalService
 	public DDMStructure addStructure(
 			long userId, long groupId, long parentStructureId, long classNameId,
 			String structureKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String definition,
-			String storageType, ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, DDMForm ddmForm,
+			DDMFormLayout ddmFormLayout, String storageType, int type,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public DDMStructure addStructure(
@@ -1041,7 +1043,7 @@ public interface DDMStructureLocalService
 	public DDMStructure updateStructure(
 			long userId, long structureId, long parentStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
+			Date defaultExpirationDate, String definition,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -1049,7 +1051,8 @@ public interface DDMStructureLocalService
 	public DDMStructure updateStructure(
 			long userId, long structureId, long parentStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String definition, ServiceContext serviceContext)
+			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	@Override

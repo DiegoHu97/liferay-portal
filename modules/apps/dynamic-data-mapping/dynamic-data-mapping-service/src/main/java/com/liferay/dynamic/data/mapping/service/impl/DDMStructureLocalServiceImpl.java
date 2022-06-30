@@ -256,7 +256,7 @@ public class DDMStructureLocalServiceImpl
 	public DDMStructure addStructure(
 			long userId, long groupId, long parentStructureId, long classNameId,
 			String structureKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String definition,
+			Map<Locale, String> descriptionMap, Date defaultExpirationDate, String definition,
 			String storageType, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -288,6 +288,7 @@ public class DDMStructureLocalServiceImpl
 		structure.setVersion(DDMStructureConstants.VERSION_DEFAULT);
 		structure.setNameMap(nameMap);
 		structure.setDescriptionMap(descriptionMap);
+		structure.setDefaultExpirationDate(defaultExpirationDate);
 		structure.setDefinition(definition);
 		structure.setStorageType(storageType);
 		structure.setType(DDMStructureConstants.TYPE_DEFAULT);
@@ -1511,6 +1512,7 @@ public class DDMStructureLocalServiceImpl
 	public DDMStructure updateStructure(
 			long userId, long structureId, long parentStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			Date defaultExpirationDate,
 			String definition, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1535,6 +1537,7 @@ public class DDMStructureLocalServiceImpl
 		structure.setVersionUserName(user.getFullName());
 		structure.setModifiedDate(new Date());
 		structure.setDescriptionMap(descriptionMap);
+		structure.setDefaultExpirationDate(defaultExpirationDate);
 		structure.setDefinition(definition);
 
 		structure = ddmStructurePersistence.update(structure);

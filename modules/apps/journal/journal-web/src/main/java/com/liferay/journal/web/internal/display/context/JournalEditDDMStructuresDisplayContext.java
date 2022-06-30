@@ -201,6 +201,21 @@ public class JournalEditDDMStructuresDisplayContext {
 		return storageType;
 	}
 
+	public boolean isNeverExpire() {
+		if (_neverExpire != null) {
+			return _neverExpire;
+		}
+
+		_neverExpire = ParamUtil.getBoolean(
+			_httpServletRequest, "neverExpire", true);
+
+		if ((_ddmStructure != null) && (_ddmStructure.getDefaultExpirationDate() != null)) {
+			_neverExpire = false;
+		}
+
+		return _neverExpire;
+	}
+
 	public boolean isStructureFieldIndexableEnable() {
 		return _journalWebConfiguration.structureFieldIndexableEnable();
 	}
@@ -213,6 +228,7 @@ public class JournalEditDDMStructuresDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final JournalWebConfiguration _journalWebConfiguration;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private Boolean _neverExpire;
 	private String _script;
 
 }
