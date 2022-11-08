@@ -1,3 +1,8 @@
+// - Show "no results"
+// - Show "loading"
+// - Check if URL works
+// - Local filter more than 10 items
+
 const buttonElement = fragmentElement.querySelector('.btn');
 const optionListElement = fragmentElement.querySelector('.dropdown-menu');
 
