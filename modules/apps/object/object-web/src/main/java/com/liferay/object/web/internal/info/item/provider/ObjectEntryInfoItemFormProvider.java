@@ -57,14 +57,19 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
+import org.osgi.service.component.annotations.Reference;
 
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -515,8 +520,12 @@ public class ObjectEntryInfoItemFormProvider
 			return "id";
 		}
 
-		return titleObjectField.getName();
+		return _defaultTitleFields.getOrDefault(
+			titleObjectField.getName(), titleObjectField.getName());
 	}
+
+	private static final Map<String, String> _defaultTitleFields =
+		HashMapBuilder.put("createDate", "dateCreated").build();
 
 	private String _getRelationshipURL(ObjectField objectField) {
 		ServiceContext serviceContext =
