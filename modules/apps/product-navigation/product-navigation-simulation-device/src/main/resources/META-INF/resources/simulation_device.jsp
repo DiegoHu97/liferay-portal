@@ -18,7 +18,7 @@
 
 <div id="<portlet:namespace />simulationDeviceContainer">
 	<div class="list-group-panel">
-		<div><react:component module="SimulationDevice" /></div>
+		<div><react:component module="js/SimulationDevice" /></div>
 
 		<clay:container-fluid
 			cssClass="devices"
