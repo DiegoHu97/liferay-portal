@@ -76,14 +76,16 @@ export default function SimulationDevice({portletNamespace: namespace}) {
 				)}
 			</div>
 
-			<CustomDeviceInputs namespace={namespace} />
+			{selectedOption === 'custom' && (
+				<CustomDeviceInputs namespace={namespace} />
+			)}
 		</div>
 	);
 }
 
 function CustomDeviceInputs(namespace) {
 	return (
-		<div className="custom-devices flex-nowrap hide mt-3 row">
+		<div className="custom-devices flex-nowrap mt-3 row">
 			<ClayForm.Group className="flex-grow-1 mr-3">
 				<label htmlFor={`${namespace}height`}>
 					{Liferay.Language.get('height') + ' (px):'}
