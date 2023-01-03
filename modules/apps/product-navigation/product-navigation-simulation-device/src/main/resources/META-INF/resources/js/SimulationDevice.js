@@ -15,7 +15,8 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React from 'react';
+import classNames from 'classnames';
+import React, {useState} from 'react';
 
 const devices = {
 	desktop: {
@@ -55,6 +56,8 @@ const devices = {
 };
 
 export default function SimulationDevice({portletNamespace: namespace}) {
+	const [selectedOption, setSelectedOption] = useState('desktop');
+
 	return (
 		<div className="container-fluid container-fluid-max-x">
 			<div className="default-devices mb-2 row">
@@ -66,6 +69,8 @@ export default function SimulationDevice({portletNamespace: namespace}) {
 							icon={icon}
 							key={dataDevice}
 							label={label}
+							selectedOption={selectedOption}
+							setSelectedOption={setSelectedOption}
 						/>
 					)
 				)}
@@ -108,12 +113,22 @@ function CustomDeviceInputs(namespace) {
 	);
 }
 
-function DeviceButton({classStyle, dataDevice, icon, label}) {
+function DeviceButton({
+	classStyle,
+	dataDevice,
+	icon,
+	label,
+	selectedOption,
+	setSelectedOption,
+}) {
 	return (
 		<ClayButton
-			className={classStyle}
+			className={classNames(classStyle, {
+				selected: selectedOption === dataDevice,
+			})}
 			data-device={dataDevice}
 			displayType="unstyled"
+			onClick={(event) => onButtonClickHandler(event, setSelectedOption)}
 			type="button"
 		>
 			<div className="c-inner px-0" tabIndex="-1">
@@ -132,3 +147,7 @@ function DeviceButton({classStyle, dataDevice, icon, label}) {
 		</ClayButton>
 	);
 }
+
+const onButtonClickHandler = (event, setSelectedOption) => {
+	setSelectedOption(event.currentTarget.getAttribute('data-device'));
+};
