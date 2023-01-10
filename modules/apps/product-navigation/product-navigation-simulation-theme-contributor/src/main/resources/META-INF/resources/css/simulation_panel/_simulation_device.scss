@@ -40,10 +40,30 @@ html#{$cadmin-selector} {
 				border-radius: 25px;
 			}
 
+			&.custom {
+				height: 600px;
+				width: 600px;
+			}
+
+			&.desktop {
+				border-radius: 16px;
+				height: 1050px;
+				padding: 24px;
+				width: 1300px;
+			}
+
+			&.smartphone {
+				height: 640px;
+				width: 400px;
+			}
+
 			&.tablet {
 				&:before {
 					border-radius: 5px;
 				}
+
+				height: 900px;
+				width: 760px;
 			}
 		}
 
@@ -95,9 +115,24 @@ html#{$cadmin-selector} {
 			}
 		}
 
-		&.desktop {
-			border-radius: 16px;
-			padding: 24px;
+		.custom {
+			height: 600px;
+			width: 600px;
+		}
+
+		.desktop {
+			height: 1050px;
+			width: 1300px;
+		}
+
+		.smartphone {
+			height: 640px;
+			width: 400px;
+		}
+
+		.tablet {
+			height: 900px;
+			width: 760px;
 		}
 
 		&.custom,

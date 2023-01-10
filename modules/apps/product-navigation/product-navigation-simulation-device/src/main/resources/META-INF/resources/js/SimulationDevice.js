@@ -160,6 +160,34 @@ function PreviewIframe({dataDevice}) {
 
 	const iframeURL = createIframeURL();
 
+	useEffect(() => {
+		const iframeContainer = document.getElementById('iframeContainer');
+
+		const simulationDeviceIframe = document.getElementById(
+			'simulationDeviceIframe'
+		);
+
+		const styles = {
+			height: '',
+			width: '',
+		};
+
+		if (dataDevice === devices.autosize.dataDevice) {
+			styles.height = portalRef.current.offsetHeight + 'px';
+			styles.width = portalRef.current.offsetWidth + 'px';
+
+			Object.entries(styles).forEach(([key, value]) => {
+				iframeContainer.style[key] = value;
+				simulationDeviceIframe.style[key] = value;
+			});
+		} else {
+			Object.entries(styles).forEach(([key, value]) => {
+				iframeContainer.style[key] = value;
+				simulationDeviceIframe.style[key] = value;
+			});
+		}
+	}, [dataDevice]);
+
 	return (
 		<ReactPortal
 			className="lfr-simulation-device"
@@ -170,7 +198,11 @@ function PreviewIframe({dataDevice}) {
 				className={classNames('lfr-device modal-dialog', dataDevice)}
 				id="iframeContainer"
 			>
-				<iframe src={iframeURL}></iframe>
+				<iframe
+					className={classNames(dataDevice)}
+					id="simulationDeviceIframe"
+					src={iframeURL}
+				></iframe>
 			</div>
 		</ReactPortal>
 	);
