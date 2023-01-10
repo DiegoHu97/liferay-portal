@@ -15,8 +15,9 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {ReactPortal} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 const devices = {
 	desktop: {
@@ -33,7 +34,7 @@ const devices = {
 		label: Liferay.Language.get('tablet'),
 	},
 	// eslint-disable-next-line sort-keys
-	mobile: {
+	smartphone: {
 		classStyle: 'col-4 lfr-device-item mb-3 text-center',
 		dataDevice: 'smartphone',
 		icon: 'mobile-portrait',
@@ -56,7 +57,7 @@ const devices = {
 };
 
 export default function SimulationDevice({portletNamespace: namespace}) {
-	const [selectedOption, setSelectedOption] = useState('desktop');
+	const [selectedOption, setSelectedOption] = useState(devices.desktop);
 
 	return (
 		<div className="container-fluid container-fluid-max-x">
@@ -76,9 +77,13 @@ export default function SimulationDevice({portletNamespace: namespace}) {
 				)}
 			</div>
 
-			{selectedOption === 'custom' && (
+			{selectedOption.dataDevice === 'custom' && (
 				<CustomDeviceInputs namespace={namespace} />
 			)}
+
+			<PreviewIframe
+				dataDevice={selectedOption.dataDevice}
+			></PreviewIframe>
 		</div>
 	);
 }
@@ -126,7 +131,7 @@ function DeviceButton({
 	return (
 		<ClayButton
 			className={classNames(classStyle, {
-				selected: selectedOption === dataDevice,
+				selected: selectedOption.dataDevice === dataDevice,
 			})}
 			data-device={dataDevice}
 			displayType="unstyled"
@@ -150,6 +155,39 @@ function DeviceButton({
 	);
 }
 
+function PreviewIframe({dataDevice}) {
+	const portalRef = useRef();
+
+	const iframeURL = createIframeURL();
+
+	return (
+		<ReactPortal
+			className="lfr-simulation-device"
+			container={document.body}
+			ref={portalRef}
+		>
+			<div
+				className={classNames('lfr-device modal-dialog', dataDevice)}
+				id="iframeContainer"
+			>
+				<iframe src={iframeURL}></iframe>
+			</div>
+		</ReactPortal>
+	);
+}
+
+const createIframeURL = () => {
+	const url = new URL(location.href);
+	const searchParams = new URLSearchParams(url.search);
+	if (searchParams.has('segmentsExperienceId')) {
+		searchParams.delete('segmentsExperienceId');
+	}
+	searchParams.append('p_l_mode', 'preview');
+
+	return `${url.origin}${url.pathname}?${searchParams.toString()}`;
+};
+
 const onButtonClickHandler = (event, setSelectedOption) => {
-	setSelectedOption(event.currentTarget.getAttribute('data-device'));
+	const selectedOption = event.currentTarget.getAttribute('data-device');
+	setSelectedOption(devices[`${selectedOption}`]);
 };
