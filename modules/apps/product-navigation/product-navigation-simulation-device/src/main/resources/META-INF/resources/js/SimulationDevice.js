@@ -174,28 +174,16 @@ function PreviewIframe({dataDevice, iconRotated, setPreviousDevice}) {
 	useEffect(() => {
 		const iframeContainer = document.getElementById('iframeContainer');
 
-		const simulationDeviceIframe = document.getElementById(
-			'simulationDeviceIframe'
-		);
-
-		const styles = {
-			height: '',
-			width: '',
-		};
-
 		if (dataDevice === devices.autosize.dataDevice) {
-			styles.height = portalRef.current.offsetHeight + 'px';
-			styles.width = portalRef.current.offsetWidth + 'px';
-
-			Object.entries(styles).forEach(([key, value]) => {
-				iframeContainer.style[key] = value;
-				simulationDeviceIframe.style[key] = value;
+<<<<<<< HEAD
+			setSizes({
+				height: portalRef.current.offsetHeight + 'px',
+				width: portalRef.current.offsetWidth + 'px',
 			});
 		} else {
-			Object.entries(styles).forEach(([key, value]) => {
-				iframeContainer.style[key] = value;
-				simulationDeviceIframe.style[key] = value;
-			});
+=======
+>>>>>>> d31c7fce6b83 (extract setsizes)
+			setSizes({height: '', width: ''});
 		}
 
 		setPreviousDevice(dataDevice);
@@ -298,15 +286,7 @@ const onButtonClickHandler = (event, previousDevice, setSelectedOption) => {
 		icon.classList.toggle('hide');
 		iconRotate.classList.toggle('hide');
 
-		const styles = {
-			height,
-			width,
-		};
-
-		Object.entries(styles).forEach(([key, value]) => {
-			iframeContainer.style[key] = value;
-			simulationDeviceIframe.style[key] = value;
-		});
+		setSizes({height, width});
 	} else {
 		if (
 			selectedOption === devices.smartphone.dataDevice ||
@@ -315,4 +295,28 @@ const onButtonClickHandler = (event, previousDevice, setSelectedOption) => {
 			iframeContainer.classList.remove('rotated');
 		}
 	}
+};
+
+const setSizes = ({height, width}) => {
+	const iframeContainer = document.getElementById('iframeContainer');
+	const simulationDeviceIframe = document.getElementById(
+		'simulationDeviceIframe'
+	);
+
+	iframeContainer.style.height = height;
+	iframeContainer.style.width = width;
+	simulationDeviceIframe.style.height = height;
+	simulationDeviceIframe.style.width = width;
+};
+
+const setSizes = ({height, width}) => {
+	const iframeContainer = document.getElementById('iframeContainer');
+	const simulationDeviceIframe = document.getElementById(
+		'simulationDeviceIframe'
+	);
+
+	iframeContainer.style.height = height;
+	iframeContainer.style.width = width;
+	simulationDeviceIframe.style.height = height;
+	simulationDeviceIframe.style.width = width;
 };
