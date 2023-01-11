@@ -195,14 +195,6 @@ function PreviewIframe({dataDevice, iconRotated, setPreviousDevice}) {
 		const iframeContainer = document.getElementById('iframeContainer');
 
 		if (dataDevice === devices.autosize.dataDevice) {
-<<<<<<< HEAD
-			setSizes({
-				height: portalRef.current.offsetHeight + 'px',
-				width: portalRef.current.offsetWidth + 'px',
-			});
-		} else {
-=======
->>>>>>> d31c7fce6b83 (extract setsizes)
 			setSizes({height: '', width: ''});
 		}
 
@@ -215,14 +207,31 @@ function PreviewIframe({dataDevice, iconRotated, setPreviousDevice}) {
 
 	return (
 		<ReactPortal
-			className="lfr-simulation-device"
+			className={classNames('lfr-simulation-device', {
+				'desktop-device': devices.desktop.dataDevice,
+				'smartphone-device':
+					dataDevice === devices.smartphone.dataDevice &&
+					!iconRotated,
+				'smartphone-device-rotated':
+					dataDevice === devices.smartphone.dataDevice && iconRotated,
+				'tablet-device':
+					dataDevice === devices.tablet.dataDevice && !iconRotated,
+				'tablet-device-rotated':
+					dataDevice === devices.tablet.dataDevice && iconRotated,
+			})}
 			container={document.body}
+			id="simulationDevice"
 			ref={portalRef}
 		>
 			<div
 				className={classNames(
 					'lfr-device modal-dialog',
 					dataDevice,
+					{
+						'm-0':
+							dataDevice === devices.desktop.dataDevice ||
+							dataDevice === devices.autosize.dataDevice,
+					},
 					{
 						rotated: iconRotated,
 					},
@@ -292,6 +301,7 @@ const onButtonClickHandler = (event, previousDevice, setSelectedOption) => {
 			devices[`${selectedOption}`].iconRotated = true;
 		}
 
+		const simulationDevice = document.getElementById('simulationDevice');
 		const simulationDeviceIframe = document.getElementById(
 			'simulationDeviceIframe'
 		);
@@ -305,6 +315,8 @@ const onButtonClickHandler = (event, previousDevice, setSelectedOption) => {
 		simulationDeviceIframe.classList.toggle(selectedOption + '-rotated');
 		icon.classList.toggle('hide');
 		iconRotate.classList.toggle('hide');
+		simulationDevice.classList.toggle(selectedOption + '-device');
+		simulationDevice.classList.toggle(selectedOption + '-device-rotated');
 
 		setSizes({height, width});
 	} else {
@@ -343,18 +355,6 @@ const setSimulatorWidth = (event, setCustomWidth) => {
 
 	iframeContainer.style.width = width + 'px';
 	simulationDeviceIframe.style.width = width + 'px';
-};
-
-const setSizes = ({height, width}) => {
-	const iframeContainer = document.getElementById('iframeContainer');
-	const simulationDeviceIframe = document.getElementById(
-		'simulationDeviceIframe'
-	);
-
-	iframeContainer.style.height = height;
-	iframeContainer.style.width = width;
-	simulationDeviceIframe.style.height = height;
-	simulationDeviceIframe.style.width = width;
 };
 
 const setSizes = ({height, width}) => {

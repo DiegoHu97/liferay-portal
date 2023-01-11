@@ -8,6 +8,60 @@ html#{$cadmin-selector} {
 			opacity: 0.9;
 		}
 
+		&.desktop-device {
+			display: flex;
+			justify-content: center;
+
+			@include media-breakpoint-down(lg) {
+				display: block;
+			}
+		}
+
+		&.smartphone-device {
+			align-items: center;
+			display: flex;
+			justify-content: center;
+
+			@include media-breakpoint-down(sm) {
+				align-items: center;
+				display: flex;
+				justify-content: start;
+			}
+
+			&-rotated {
+				align-items: center;
+				display: flex;
+				justify-content: center;
+
+				@include media-breakpoint-down(md) {
+					align-items: center;
+					display: flex;
+					justify-content: start;
+				}
+			}
+		}
+
+		&.tablet-device {
+			display: flex;
+			justify-content: center;
+
+			@include media-breakpoint-down(md) {
+				display: block;
+			}
+
+			&-rotated {
+				align-items: center;
+				display: flex;
+				justify-content: center;
+
+				@include media-breakpoint-down(lg) {
+					align-items: center;
+					display: flex;
+					justify-content: start;
+				}
+			}
+		}
+
 		.lfr-device {
 			opacity: 1;
 			pointer-events: all;
@@ -59,8 +113,8 @@ html#{$cadmin-selector} {
 				&:before {
 					border-radius: 5px;
 				}
-
 				height: 900px;
+				margin: 0;
 				width: 760px;
 
 				&-rotated {
@@ -91,6 +145,11 @@ html#{$cadmin-selector} {
 	}
 
 	.lfr-device {
+		.autosize {
+			height: 100%;
+			width: 100%;
+		}
+
 		.lfr-device-size-status {
 			.lfr-device-size-status-content {
 				background-color: #000;

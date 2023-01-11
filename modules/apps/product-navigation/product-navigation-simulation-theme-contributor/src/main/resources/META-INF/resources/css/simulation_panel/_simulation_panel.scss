@@ -105,8 +105,8 @@ html#{$cadmin-selector} {
 			position: absolute;
 
 			&.autosize {
-				margin-top: 56px;
-				position: fixed;
+				height: 100%;
+				width: 100%;
 			}
 		}
 	}
