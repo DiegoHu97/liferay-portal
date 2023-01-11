@@ -31,6 +31,7 @@ const devices = {
 		dataDevice: 'tablet',
 		icon: 'tablet-portrait',
 		iconLandscape: 'tablet-landscape',
+		iconRotated: false,
 		label: Liferay.Language.get('tablet'),
 	},
 	// eslint-disable-next-line sort-keys
@@ -39,6 +40,7 @@ const devices = {
 		dataDevice: 'smartphone',
 		icon: 'mobile-portrait',
 		iconLandcape: 'mobile-landscape',
+		iconRotated: false,
 		label: Liferay.Language.get('mobile'),
 	},
 	// eslint-disable-next-line sort-keys
@@ -58,6 +60,9 @@ const devices = {
 
 export default function SimulationDevice({portletNamespace: namespace}) {
 	const [selectedOption, setSelectedOption] = useState(devices.desktop);
+	const [previousDevice, setPreviousDevice] = useState(
+		devices.desktop.dataDevice
+	);
 
 	return (
 		<div className="container-fluid container-fluid-max-x">
@@ -70,6 +75,7 @@ export default function SimulationDevice({portletNamespace: namespace}) {
 							icon={icon}
 							key={dataDevice}
 							label={label}
+							previousDevice={previousDevice}
 							selectedOption={selectedOption}
 							setSelectedOption={setSelectedOption}
 						/>
@@ -83,6 +89,8 @@ export default function SimulationDevice({portletNamespace: namespace}) {
 
 			<PreviewIframe
 				dataDevice={selectedOption.dataDevice}
+				iconRotated={selectedOption.iconRotated}
+				setPreviousDevice={setPreviousDevice}
 			></PreviewIframe>
 		</div>
 	);
@@ -125,6 +133,7 @@ function DeviceButton({
 	dataDevice,
 	icon,
 	label,
+	previousDevice,
 	selectedOption,
 	setSelectedOption,
 }) {
@@ -135,7 +144,9 @@ function DeviceButton({
 			})}
 			data-device={dataDevice}
 			displayType="unstyled"
-			onClick={(event) => onButtonClickHandler(event, setSelectedOption)}
+			onClick={(event) =>
+				onButtonClickHandler(event, previousDevice, setSelectedOption)
+			}
 			type="button"
 		>
 			<div className="c-inner px-0" tabIndex="-1">
@@ -155,7 +166,7 @@ function DeviceButton({
 	);
 }
 
-function PreviewIframe({dataDevice}) {
+function PreviewIframe({dataDevice, iconRotated, setPreviousDevice}) {
 	const portalRef = useRef();
 
 	const iframeURL = createIframeURL();
@@ -186,7 +197,13 @@ function PreviewIframe({dataDevice}) {
 				simulationDeviceIframe.style[key] = value;
 			});
 		}
-	}, [dataDevice]);
+
+		setPreviousDevice(dataDevice);
+
+		if (iconRotated) {
+			iframeContainer.classList.add('rotated');
+		}
+	}, [dataDevice, iconRotated, setPreviousDevice]);
 
 	return (
 		<ReactPortal
@@ -195,11 +212,39 @@ function PreviewIframe({dataDevice}) {
 			ref={portalRef}
 		>
 			<div
-				className={classNames('lfr-device modal-dialog', dataDevice)}
+				className={classNames(
+					'lfr-device modal-dialog',
+					dataDevice,
+					{
+						rotated: iconRotated,
+					},
+					{
+						'smartphone-rotated':
+							dataDevice === devices.smartphone.dataDevice &&
+							iconRotated,
+					},
+					{
+						'tablet-rotated':
+							dataDevice === devices.tablet.dataDevice &&
+							iconRotated,
+					}
+				)}
 				id="iframeContainer"
 			>
 				<iframe
-					className={classNames(dataDevice)}
+					className={classNames(
+						dataDevice,
+						{
+							'smartphone-rotated':
+								dataDevice === devices.smartphone.dataDevice &&
+								iconRotated,
+						},
+						{
+							'tablet-rotated':
+								dataDevice === devices.tablet.dataDevice &&
+								iconRotated,
+						}
+					)}
 					id="simulationDeviceIframe"
 					src={iframeURL}
 				></iframe>
@@ -219,7 +264,55 @@ const createIframeURL = () => {
 	return `${url.origin}${url.pathname}?${searchParams.toString()}`;
 };
 
-const onButtonClickHandler = (event, setSelectedOption) => {
+const onButtonClickHandler = (event, previousDevice, setSelectedOption) => {
 	const selectedOption = event.currentTarget.getAttribute('data-device');
 	setSelectedOption(devices[`${selectedOption}`]);
+
+	const iframeContainer = document.getElementById('iframeContainer');
+
+	if (
+		selectedOption === previousDevice &&
+		(selectedOption === devices.smartphone.dataDevice ||
+			selectedOption === devices.tablet.dataDevice)
+	) {
+		const height = iframeContainer.offsetWidth;
+		const width = iframeContainer.offsetHeight;
+
+		if (devices[`${selectedOption}`].iconRotated) {
+			devices[`${selectedOption}`].iconRotated = false;
+		} else {
+			devices[`${selectedOption}`].iconRotated = true;
+		}
+
+		const simulationDeviceIframe = document.getElementById(
+			'simulationDeviceIframe'
+		);
+		const icon = event.currentTarget.getElementsByClassName('icon')[0];
+		const iconRotate = event.currentTarget.getElementsByClassName(
+			'icon-rotate'
+		)[0];
+
+		iframeContainer.classList.toggle('rotated');
+		iframeContainer.classList.toggle(selectedOption + '-rotated');
+		simulationDeviceIframe.classList.toggle(selectedOption + '-rotated');
+		icon.classList.toggle('hide');
+		iconRotate.classList.toggle('hide');
+
+		const styles = {
+			height,
+			width,
+		};
+
+		Object.entries(styles).forEach(([key, value]) => {
+			iframeContainer.style[key] = value;
+			simulationDeviceIframe.style[key] = value;
+		});
+	} else {
+		if (
+			selectedOption === devices.smartphone.dataDevice ||
+			selectedOption === devices.tablet.dataDevice
+		) {
+			iframeContainer.classList.remove('rotated');
+		}
+	}
 };
