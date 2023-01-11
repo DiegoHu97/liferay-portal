@@ -60,6 +60,8 @@ const devices = {
 
 export default function SimulationDevice({portletNamespace: namespace}) {
 	const [selectedOption, setSelectedOption] = useState(devices.desktop);
+	const [customHeight, setCustomHeight] = useState(600);
+	const [customWidth, setCustomWidth] = useState(600);
 	const [previousDevice, setPreviousDevice] = useState(
 		devices.desktop.dataDevice
 	);
@@ -84,7 +86,13 @@ export default function SimulationDevice({portletNamespace: namespace}) {
 			</div>
 
 			{selectedOption.dataDevice === 'custom' && (
-				<CustomDeviceInputs namespace={namespace} />
+				<CustomDeviceInputs
+					customHeight={customHeight}
+					customWidth={customWidth}
+					namespace={namespace}
+					setCustomHeight={setCustomHeight}
+					setCustomWidth={setCustomWidth}
+				/>
 			)}
 
 			<PreviewIframe
@@ -96,7 +104,13 @@ export default function SimulationDevice({portletNamespace: namespace}) {
 	);
 }
 
-function CustomDeviceInputs(namespace) {
+function CustomDeviceInputs({
+	customHeight,
+	customWidth,
+	namespace,
+	setCustomHeight,
+	setCustomWidth,
+}) {
 	return (
 		<div className="custom-devices flex-nowrap mt-3 row">
 			<ClayForm.Group className="flex-grow-1 mr-3">
@@ -106,9 +120,12 @@ function CustomDeviceInputs(namespace) {
 
 				<ClayInput
 					name="height"
+					onChange={(event) =>
+						setSimulatorHeight(event, setCustomHeight)
+					}
 					size="4"
 					type="number"
-					value="600"
+					value={customHeight}
 				></ClayInput>
 			</ClayForm.Group>
 
@@ -119,9 +136,12 @@ function CustomDeviceInputs(namespace) {
 
 				<ClayInput
 					name="width"
+					onChange={(event) =>
+						setSimulatorWidth(event, setCustomWidth)
+					}
 					size="4"
 					type="number"
-					value="600"
+					value={customWidth}
 				></ClayInput>
 			</ClayForm.Group>
 		</div>
@@ -295,6 +315,34 @@ const onButtonClickHandler = (event, previousDevice, setSelectedOption) => {
 			iframeContainer.classList.remove('rotated');
 		}
 	}
+};
+
+const setSimulatorHeight = (event, setCustomHeight) => {
+	const height = event.target.value;
+
+	const iframeContainer = document.getElementById('iframeContainer');
+	const simulationDeviceIframe = document.getElementById(
+		'simulationDeviceIframe'
+	);
+
+	setCustomHeight(height);
+
+	iframeContainer.style.height = height + 'px';
+	simulationDeviceIframe.style.height = height + 'px';
+};
+
+const setSimulatorWidth = (event, setCustomWidth) => {
+	const width = event.target.value;
+
+	const iframeContainer = document.getElementById('iframeContainer');
+	const simulationDeviceIframe = document.getElementById(
+		'simulationDeviceIframe'
+	);
+
+	setCustomWidth(width);
+
+	iframeContainer.style.width = width + 'px';
+	simulationDeviceIframe.style.width = width + 'px';
 };
 
 const setSizes = ({height, width}) => {
