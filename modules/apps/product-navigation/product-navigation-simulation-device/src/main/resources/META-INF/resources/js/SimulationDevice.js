@@ -65,42 +65,53 @@ export default function SimulationDevice({portletNamespace: namespace}) {
 	const [previousDevice, setPreviousDevice] = useState(
 		devices.desktop.dataDevice
 	);
+	const [simulatorVisible, setSimulatorVisible] = useState(true);
+
+	Liferay.on('SimulationMenu:closeSimulationPanel', () =>
+		setSimulatorVisible(false)
+	);
+
+	Liferay.on('SimulationMenu:openSimulationPanel', () =>
+		setSimulatorVisible(true)
+	);
 
 	return (
-		<div className="container-fluid container-fluid-max-x">
-			<div className="default-devices mb-2 row">
-				{Object.values(devices).map(
-					({classStyle, dataDevice, icon, label}) => (
-						<DeviceButton
-							classStyle={classStyle}
-							dataDevice={dataDevice}
-							icon={icon}
-							key={dataDevice}
-							label={label}
-							previousDevice={previousDevice}
-							selectedOption={selectedOption}
-							setSelectedOption={setSelectedOption}
-						/>
-					)
+		simulatorVisible && (
+			<div className="container-fluid container-fluid-max-x">
+				<div className="default-devices mb-2 row">
+					{Object.values(devices).map(
+						({classStyle, dataDevice, icon, label}) => (
+							<DeviceButton
+								classStyle={classStyle}
+								dataDevice={dataDevice}
+								icon={icon}
+								key={dataDevice}
+								label={label}
+								previousDevice={previousDevice}
+								selectedOption={selectedOption}
+								setSelectedOption={setSelectedOption}
+							/>
+						)
+					)}
+				</div>
+
+				{selectedOption.dataDevice === 'custom' && (
+					<CustomDeviceInputs
+						customHeight={customHeight}
+						customWidth={customWidth}
+						namespace={namespace}
+						setCustomHeight={setCustomHeight}
+						setCustomWidth={setCustomWidth}
+					/>
 				)}
+
+				<PreviewIframe
+					dataDevice={selectedOption.dataDevice}
+					iconRotated={selectedOption.iconRotated}
+					setPreviousDevice={setPreviousDevice}
+				></PreviewIframe>
 			</div>
-
-			{selectedOption.dataDevice === 'custom' && (
-				<CustomDeviceInputs
-					customHeight={customHeight}
-					customWidth={customWidth}
-					namespace={namespace}
-					setCustomHeight={setCustomHeight}
-					setCustomWidth={setCustomWidth}
-				/>
-			)}
-
-			<PreviewIframe
-				dataDevice={selectedOption.dataDevice}
-				iconRotated={selectedOption.iconRotated}
-				setPreviousDevice={setPreviousDevice}
-			></PreviewIframe>
-		</div>
+		)
 	);
 }
 
