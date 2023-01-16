@@ -219,7 +219,8 @@ function PreviewIframe({dataDevice, iconRotated, setPreviousDevice}) {
 	return (
 		<ReactPortal
 			className={classNames('lfr-simulation-device', {
-				'desktop-device': devices.desktop.dataDevice,
+				'custom-device': dataDevice === devices.custom.dataDevice,
+				'desktop-device': dataDevice === devices.desktop.dataDevice,
 				'smartphone-device':
 					dataDevice === devices.smartphone.dataDevice &&
 					!iconRotated,
@@ -276,6 +277,31 @@ function PreviewIframe({dataDevice, iconRotated, setPreviousDevice}) {
 					id="simulationDeviceIframe"
 					src={iframeURL}
 				></iframe>
+
+				{dataDevice === devices.custom.dataDevice && (
+					<>
+						<div className="handle handle-top-left">
+							<div className="outer-line"></div>
+
+							<div className="inner-line"></div>
+						</div>
+						<div className="handle handle-top-right">
+							<div className="outer-line"></div>
+
+							<div className="inner-line"></div>
+						</div>
+						<div className="handle handle-bottom-left">
+							<div className="outer-line"></div>
+
+							<div className="inner-line"></div>
+						</div>
+						<div className="handle handle-bottom-right">
+							<div className="outer-line"></div>
+
+							<div className="inner-line"></div>
+						</div>
+					</>
+				)}
 			</div>
 		</ReactPortal>
 	);

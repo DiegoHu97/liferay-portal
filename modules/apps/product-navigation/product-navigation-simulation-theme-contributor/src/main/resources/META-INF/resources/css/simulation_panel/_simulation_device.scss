@@ -8,6 +8,18 @@ html#{$cadmin-selector} {
 			opacity: 0.9;
 		}
 
+		&.custom-device {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			@include media-breakpoint-down(md) {
+				display: flex;
+				align-items: center;
+				justify-content: start;
+			}
+		}
+
 		&.desktop-device {
 			display: flex;
 			justify-content: center;
@@ -66,6 +78,60 @@ html#{$cadmin-selector} {
 			opacity: 1;
 			pointer-events: all;
 			visibility: visible;
+
+			.handle {
+				height: 13px;
+				width: 13px;
+				background: transparent;
+				position: absolute;
+
+				.outer-line {
+					position: absolute;
+					top: 24%;
+					left: 1%;
+					width: 50%;
+					height: 1px;
+					background: #9697a4;
+					transform: rotateZ(-45deg);
+				}
+
+				.inner-line {
+					position: absolute;
+					top: 39%;
+					left: 1%;
+					width: 76%;
+					height: 1px;
+					background: #9697a4;
+					transform: rotateZ(-45deg);
+				}
+
+				&.handle-top-left {
+					cursor: nw-resize;
+					top: 5px;
+					left: 5px;
+				}
+
+				&.handle-top-right {
+					cursor: ne-resize;
+					top: 5px;
+					right: 5px;
+					transform: rotateZ(90deg);
+				}
+
+				&.handle-bottom-left {
+					cursor: sw-resize;
+					bottom: 5px;
+					left: 5px;
+					transform: rotateZ(270deg);
+				}
+
+				&.handle-bottom-right {
+					cursor: se-resize;
+					bottom: 5px;
+					right: 5px;
+					transform: rotateZ(180deg);
+				}
+			}
 
 			&.lfr-device--is-navigating {
 				opacity: 0;
