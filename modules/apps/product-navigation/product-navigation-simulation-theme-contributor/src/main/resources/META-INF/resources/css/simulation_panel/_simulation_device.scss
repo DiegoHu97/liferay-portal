@@ -8,10 +8,130 @@ html#{$cadmin-selector} {
 			opacity: 0.9;
 		}
 
+		&.custom-device {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			@include media-breakpoint-down(md) {
+				display: flex;
+				align-items: center;
+				justify-content: start;
+			}
+		}
+
+		&.desktop-device {
+			display: flex;
+			justify-content: center;
+
+			@include media-breakpoint-down(lg) {
+				display: block;
+			}
+		}
+
+		&.smartphone-device {
+			align-items: center;
+			display: flex;
+			justify-content: center;
+
+			@include media-breakpoint-down(sm) {
+				align-items: center;
+				display: flex;
+				justify-content: start;
+			}
+
+			&-rotated {
+				align-items: center;
+				display: flex;
+				justify-content: center;
+
+				@include media-breakpoint-down(md) {
+					align-items: center;
+					display: flex;
+					justify-content: start;
+				}
+			}
+		}
+
+		&.tablet-device {
+			display: flex;
+			justify-content: center;
+
+			@include media-breakpoint-down(md) {
+				display: block;
+			}
+
+			&-rotated {
+				align-items: center;
+				display: flex;
+				justify-content: center;
+
+				@include media-breakpoint-down(lg) {
+					align-items: center;
+					display: flex;
+					justify-content: start;
+				}
+			}
+		}
+
 		.lfr-device {
 			opacity: 1;
 			pointer-events: all;
 			visibility: visible;
+
+			.handle {
+				height: 13px;
+				width: 13px;
+				background: transparent;
+				position: absolute;
+
+				.outer-line {
+					position: absolute;
+					top: 24%;
+					left: 1%;
+					width: 50%;
+					height: 1px;
+					background: #9697a4;
+					transform: rotateZ(-45deg);
+				}
+
+				.inner-line {
+					position: absolute;
+					top: 39%;
+					left: 1%;
+					width: 76%;
+					height: 1px;
+					background: #9697a4;
+					transform: rotateZ(-45deg);
+				}
+
+				&.handle-top-left {
+					cursor: nw-resize;
+					top: 5px;
+					left: 5px;
+				}
+
+				&.handle-top-right {
+					cursor: ne-resize;
+					top: 5px;
+					right: 5px;
+					transform: rotateZ(90deg);
+				}
+
+				&.handle-bottom-left {
+					cursor: sw-resize;
+					bottom: 5px;
+					left: 5px;
+					transform: rotateZ(270deg);
+				}
+
+				&.handle-bottom-right {
+					cursor: se-resize;
+					bottom: 5px;
+					right: 5px;
+					transform: rotateZ(180deg);
+				}
+			}
 
 			&.lfr-device--is-navigating {
 				opacity: 0;
@@ -28,21 +148,44 @@ html#{$cadmin-selector} {
 				border-radius: 15px;
 			}
 
-			&.rotated {
-				&:after,
-				&:before {
-					box-shadow: #111 -1px 1px 0;
-				}
-			}
-
 			&.smartphone,
 			&.tablet {
 				border-radius: 25px;
 			}
 
+			&.custom {
+				height: 600px;
+				width: 600px;
+			}
+
+			&.desktop {
+				border-radius: 16px;
+				height: 1050px;
+				padding: 24px;
+				width: 1300px;
+			}
+
+			&.smartphone {
+				height: 640px;
+				width: 400px;
+
+				&-rotated {
+					height: 400px;
+					width: 640px;
+				}
+			}
+
 			&.tablet {
 				&:before {
 					border-radius: 5px;
+				}
+				height: 900px;
+				margin: 0;
+				width: 760px;
+
+				&-rotated {
+					height: 760px;
+					width: 900px;
 				}
 			}
 		}
@@ -68,6 +211,11 @@ html#{$cadmin-selector} {
 	}
 
 	.lfr-device {
+		.autosize {
+			height: 100%;
+			width: 100%;
+		}
+
 		.lfr-device-size-status {
 			.lfr-device-size-status-content {
 				background-color: #000;
@@ -95,9 +243,34 @@ html#{$cadmin-selector} {
 			}
 		}
 
-		&.desktop {
-			border-radius: 16px;
-			padding: 24px;
+		.custom {
+			height: 600px;
+			width: 600px;
+		}
+
+		.desktop {
+			height: 1050px;
+			width: 1300px;
+		}
+
+		.smartphone {
+			height: 640px;
+			width: 400px;
+
+			&-rotated {
+				height: 400px;
+				width: 640px;
+			}
+		}
+
+		.tablet {
+			height: 900px;
+			width: 760px;
+
+			&-rotated {
+				height: 760px;
+				width: 900px;
+			}
 		}
 
 		&.custom,
