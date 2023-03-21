@@ -107,8 +107,10 @@ else {
 	</div>
 </clay:sheet-section>
 
-<clay:sheet-section>
-	<h3 class="sheet-subtitle"><liferay-ui:message key="favicon" /></h3>
+<clay:sheet-section
+	cssClass="mb-5"
+>
+	<h3 class="mb-4 text-uppercase"><liferay-ui:message key="basic-settings" /></h3>
 
 	<img alt="<%= HtmlUtil.escape(layoutLookAndFeelDisplayContext.getFaviconTitle()) %>" class="mb-2" height="16" id="<portlet:namespace />faviconImage" src="<%= layoutLookAndFeelDisplayContext.getFaviconURL() %>" width="16" />
 
@@ -116,7 +118,9 @@ else {
 		<b><liferay-ui:message key="favicon-name" />:</b> <span id="<portlet:namespace />faviconTitle"><%= layoutLookAndFeelDisplayContext.getFaviconTitle() %></span>
 	</p>
 
-	<clay:content-row>
+	<clay:content-row
+		cssClass="mb-4"
+	>
 		<clay:content-col
 			cssClass="mr-4"
 		>
@@ -142,22 +146,24 @@ else {
 			/>
 		</clay:content-col>
 	</clay:content-row>
-</clay:sheet-section>
 
-<c:if test="<%= layoutLookAndFeelDisplayContext.hasEditableMasterLayout() %>">
-	<clay:sheet-section>
-		<react:component
-			module="js/layout/look_and_feel/MasterLayoutConfiguration"
-			props="<%= layoutLookAndFeelDisplayContext.getMasterLayoutConfigurationProps() %>"
-		/>
-	</clay:sheet-section>
-</c:if>
+	<div class="d-flex">
+		<c:if test="<%= layoutLookAndFeelDisplayContext.hasEditableMasterLayout() %>">
+			<div class="flex-grow-1 mr-4">
+				<react:component
+					module="js/layout/look_and_feel/MasterLayoutConfiguration"
+					props="<%= layoutLookAndFeelDisplayContext.getMasterLayoutConfigurationProps() %>"
+				/>
+			</div>
+		</c:if>
 
-<clay:sheet-section>
-	<react:component
-		module="js/layout/look_and_feel/StyleBookConfiguration"
-		props="<%= layoutLookAndFeelDisplayContext.getStyleBookConfigurationProps() %>"
-	/>
+		<div class="flex-grow-1">
+			<react:component
+				module="js/layout/look_and_feel/StyleBookConfiguration"
+				props="<%= layoutLookAndFeelDisplayContext.getStyleBookConfigurationProps() %>"
+			/>
+		</div>
+	</div>
 </clay:sheet-section>
 
 <div class="mt-5">
