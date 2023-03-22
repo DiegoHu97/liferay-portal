@@ -249,7 +249,33 @@ else {
 		inheritThemeOptions.classList.toggle('hide');
 		themeOptions.classList.toggle('hide');
 
-		Liferay.Util.toggleDisabled([regularCss, regularCssLabel], true);
+		const themeCssExtension = document.getElementById(
+			'<portlet:namespace />themeCSSReplacementExtension'
+		);
+		const themeCssExtensionDelete = document.getElementById(
+			'<portlet:namespace />themeCSSDeleteButton'
+		);
+		const themeCssExtensionSelect = document.getElementById(
+			'<portlet:namespace />themeCSSSelectButton'
+		);
+		const themeCssExtensionLabel = document.querySelector(
+			'[for="<portlet:namespace />themeCSSReplacementExtension"]'
+		);
+
+		Liferay.Util.toggleDisabled(
+			[
+				regularCss,
+				regularCssLabel,
+				themeCssExtension,
+				themeCssExtensionLabel,
+				themeCssExtensionSelect,
+			],
+			true
+		);
+
+		if (themeCssExtensionDelete) {
+			Liferay.Util.toggleDisabled(themeCssExtensionDelete, true);
+		}
 	});
 
 	regularUniqueLookAndFeel.addEventListener('change', (event) => {
@@ -259,7 +285,33 @@ else {
 		inheritThemeOptions.classList.toggle('hide');
 		themeOptions.classList.toggle('hide');
 
-		Liferay.Util.toggleDisabled([regularCss, regularCssLabel], false);
+		const themeCssExtension = document.getElementById(
+			'<portlet:namespace />themeCSSReplacementExtension'
+		);
+		const themeCssExtensionDelete = document.getElementById(
+			'<portlet:namespace />themeCSSDeleteButton'
+		);
+		const themeCssExtensionSelect = document.getElementById(
+			'<portlet:namespace />themeCSSSelectButton'
+		);
+		const themeCssExtensionLabel = document.querySelector(
+			'[for="<portlet:namespace />themeCSSReplacementExtension"]'
+		);
+
+		Liferay.Util.toggleDisabled(
+			[
+				regularCss,
+				regularCssLabel,
+				themeCssExtension,
+				themeCssExtensionLabel,
+				themeCssExtensionSelect,
+			],
+			false
+		);
+
+		if (themeCssExtensionDelete) {
+			Liferay.Util.toggleDisabled(themeCssExtensionDelete, false);
+		}
 	});
 </aui:script>
 

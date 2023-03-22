@@ -15,9 +15,10 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import {openSelectionModal} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 export default function ThemeCSSReplacementSelector({
+	disabled,
 	placeholder,
 	portletNamespace,
 	selectThemeCSSClientExtensionEventName,
@@ -30,7 +31,13 @@ export default function ThemeCSSReplacementSelector({
 		themeCSSCETExternalReferenceCode
 	);
 
+	const inputRef = useRef<HTMLInputElement>(null);
+
 	const onClick = () => {
+		if (inputRef.current?.classList.contains('disabled')) {
+			return;
+		}
+
 		openSelectionModal<{value: string}>({
 			onSelect: (selectedItem) => {
 				const item = JSON.parse(selectedItem.value);
@@ -53,6 +60,7 @@ export default function ThemeCSSReplacementSelector({
 			/>
 			<ClayForm.Group>
 				<label
+					className={disabled ? 'disabled' : ''}
 					htmlFor={`${portletNamespace}themeCSSReplacementExtension`}
 				>
 					{Liferay.Language.get('theme-css')}
@@ -61,10 +69,12 @@ export default function ThemeCSSReplacementSelector({
 				<ClayInput.Group className="w-50" small>
 					<ClayInput.GroupItem>
 						<ClayInput
+							disabled={disabled}
 							id={`${portletNamespace}themeCSSReplacementExtension`}
 							onClick={onClick}
 							placeholder={placeholder}
 							readOnly
+							ref={inputRef}
 							type="text"
 							value={extensionName}
 						/>
@@ -76,7 +86,9 @@ export default function ThemeCSSReplacementSelector({
 								<ClayButtonWithIcon
 									aria-label={Liferay.Language.get('replace')}
 									className="mr-2"
+									disabled={disabled}
 									displayType="secondary"
+									id={`${portletNamespace}themeCSSSelectButton`}
 									onClick={onClick}
 									small
 									symbol="change"
@@ -84,7 +96,9 @@ export default function ThemeCSSReplacementSelector({
 
 								<ClayButtonWithIcon
 									aria-label={Liferay.Language.get('delete')}
+									disabled={disabled}
 									displayType="secondary"
+									id={`${portletNamespace}themeCSSDeleteButton`}
 									onClick={() => {
 										setExtensionName('');
 										setCETExternalReferenceCode('');
@@ -96,7 +110,9 @@ export default function ThemeCSSReplacementSelector({
 						) : (
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get('select')}
+								disabled={disabled}
 								displayType="secondary"
+								id={`${portletNamespace}themeCSSSelectButton`}
 								onClick={onClick}
 								small
 								symbol="plus"
@@ -110,6 +126,7 @@ export default function ThemeCSSReplacementSelector({
 }
 
 interface IProps {
+	disabled: boolean;
 	placeholder: string;
 	portletNamespace: string;
 	selectThemeCSSClientExtensionEventName: string;
