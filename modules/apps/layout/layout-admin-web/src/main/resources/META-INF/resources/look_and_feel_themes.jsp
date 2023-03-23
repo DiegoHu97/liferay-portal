@@ -18,7 +18,11 @@
 
 <c:choose>
 	<c:when test='<%= ParamUtil.getBoolean(request, "editable", true) %>'>
-		<liferay-util:include page="/look_and_feel_themes_edit.jsp" servletContext="<%= application %>" />
+		<h4 class="mb-3"><liferay-ui:message key="current-theme" /></h4>
+
+		<div id="<portlet:namespace />currentThemeContainer">
+			<liferay-util:include page="/look_and_feel_theme_details.jsp" servletContext="<%= application %>" />
+		</div>
 	</c:when>
 	<c:otherwise>
 		<liferay-util:include page="/look_and_feel_themes_info.jsp" servletContext="<%= application %>" />
