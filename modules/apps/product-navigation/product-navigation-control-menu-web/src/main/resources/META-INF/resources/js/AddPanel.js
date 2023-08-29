@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {DragPreview} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -10,7 +11,6 @@ import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import DragAndDrop from './DragAndDrop';
-import DragPreview from './DragPreview';
 import TabsPanel from './TabsPanel';
 import {LAYOUT_DATA_ITEM_TYPES} from './constants/layoutDataItemTypes';
 
@@ -189,6 +189,14 @@ const AddPanel = ({
 		[contents, widgets]
 	);
 
+	const dragPreviewCallback = (item) => {
+		if (item?.name) {
+			return item.name;
+		}
+
+		return Liferay.Language.get('element');
+	};
+
 	return (
 		<div className={classNames('sidebar-body__add-panel p-0', {rtl})}>
 			<AddPanelContextProvider
@@ -206,7 +214,10 @@ const AddPanel = ({
 				}}
 			>
 				<DndProvider backend={HTML5Backend}>
-					<DragPreview rtl={rtl} />
+					<DragPreview
+						dragPreviewCallback={dragPreviewCallback}
+						rtl={rtl}
+					/>
 
 					<DragAndDrop />
 
