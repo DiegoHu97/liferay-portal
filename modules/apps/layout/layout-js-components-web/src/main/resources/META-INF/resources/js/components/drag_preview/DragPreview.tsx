@@ -10,10 +10,13 @@ import {useDragLayer} from 'react-dnd';
 
 import './DragPreview.scss';
 
-interface Props {
-	dir?: string;
-	dragPreviewCallback: Function;
-	rtl: boolean;
+interface DragItem {
+	icon?: string;
+	name?: string;
+}
+
+interface Props<T> {
+	getLabel: (item: T) => string;
 }
 
 const getItemStyles = (
@@ -41,8 +44,18 @@ const getItemStyles = (
 	};
 };
 
-export default function DragPreview({dir, dragPreviewCallback, rtl}: Props) {
-	const [label, setLabel] = useState();
+function defaultGetLabel(item: DragItem) {
+	if (item?.name) {
+		return item.name;
+	}
+
+	return Liferay.Language.get('element');
+}
+
+export default function DragPreview<T extends DragItem>({
+	getLabel = defaultGetLabel,
+}: Props<T>) {
+	const [label, setLabel] = useState<string>();
 
 	const ref = useRef<HTMLDivElement>(null);
 
@@ -53,14 +66,21 @@ export default function DragPreview({dir, dragPreviewCallback, rtl}: Props) {
 	}));
 
 	useEffect(() => {
-		if (dragPreviewCallback) {
-			setLabel(dragPreviewCallback(item));
+		if (getLabel) {
+			setLabel(getLabel(item));
 		}
-	}, [dragPreviewCallback, item]);
+	}, [getLabel, item]);
 
 	if (!isDragging) {
 		return null;
 	}
+
+	const rtl =
+		Liferay.Language.direction[Liferay.ThemeDisplay.getLanguageId()] ===
+		'rtl';
+
+	const dir =
+		Liferay.Language.direction[Liferay.ThemeDisplay.getLanguageId()];
 
 	return (
 		<div className="cadmin">
@@ -77,7 +97,7 @@ export default function DragPreview({dir, dragPreviewCallback, rtl}: Props) {
 					ref={ref}
 					style={getItemStyles(currentOffset, ref, rtl)}
 				>
-					{item && item.icon && (
+					{item?.icon && (
 						<ClayIcon className="mr-3 mt-0" symbol={item.icon} />
 					)}
 
