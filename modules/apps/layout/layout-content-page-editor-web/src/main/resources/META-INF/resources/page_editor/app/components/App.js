@@ -5,6 +5,7 @@
 
 import {ClayIconSpriteContext} from '@clayui/icon';
 import {getControlPanelSpritemap} from '@liferay/frontend-icons-web';
+import {DragPreview} from '@liferay/layout-js-components-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -21,13 +22,13 @@ import {
 	KeyboardMovementContextProvider,
 	useMovementSource,
 } from '../contexts/KeyboardMovementContext';
-import {StoreContextProvider} from '../contexts/StoreContext';
+import {StoreContextProvider, useSelector} from '../contexts/StoreContext';
 import AppHooks from '../hooks/app_hooks/index';
 import {reducer} from '../reducers/index';
+import selectLanguageId from '../selectors/selectLanguageId';
 import {DragAndDropContextProvider} from '../utils/drag_and_drop/useDragAndDrop';
 import CommonStylesManager from './CommonStylesManager';
 import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
-import DragPreview from './DragPreview';
 import ItemConfigurationSidebar from './ItemConfigurationSidebar';
 import KeyboardMovementManager from './KeyboardMovementManager';
 import KeyboardMovementPreview from './KeyboardMovementPreview';
@@ -39,8 +40,20 @@ import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
 import WidgetsManager from './WidgetsManager';
 
+const dragPreviewCallback = (item) => {
+	if (item?.name) {
+		return item.name;
+	}
+
+	return Liferay.Language.get('element');
+};
+
 export default function App({state}) {
 	const initialState = reducer(state, {type: INIT});
+	const languageId = useSelector(selectLanguageId);
+
+	const rtl = Liferay.Language.direction[languageId] === 'rtl';
+	const dir = Liferay.Language.direction[themeDisplay?.getLanguageId()];
 
 	return (
 		<ClayIconSpriteContext.Provider value={getControlPanelSpritemap()}>
@@ -56,7 +69,13 @@ export default function App({state}) {
 
 									<DisplayPagePreviewItemSelector dark />
 
-									<DragPreview />
+									<DragPreview
+										dir={dir}
+										dragPreviewCallback={
+											dragPreviewCallback
+										}
+										rtl={rtl}
+									/>
 
 									<WidgetsManager />
 
