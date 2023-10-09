@@ -101,7 +101,7 @@ boolean manageRestrictedNotesPermission = commerceOrderContentDisplayContext.has
 											</aui:a>
 
 											<c:if test="<%= commerceOrderNote.isRestricted() %>">
-												<aui:icon image="lock" markupView="lexicon" message="private" />
+												<clay:icon aria-label='<%= LanguageUtil.get(request, "private") %>' symbol="lock" />
 											</c:if>
 
 											<%
