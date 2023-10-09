@@ -63,7 +63,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									</aui:a>
 
 									<c:if test="<%= commerceOrderNote.isRestricted() %>">
-										<aui:icon image="lock" markupView="lexicon" message="private" />
+										<span class="c-inner" tabindex="-1">
+											<clay:icon aria-label='<%= LanguageUtil.get(request, "private") %>' symbol="lock" />
+										</span>
 									</c:if>
 								</header>
 
