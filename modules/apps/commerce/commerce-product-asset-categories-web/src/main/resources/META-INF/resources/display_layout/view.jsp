@@ -34,7 +34,11 @@ if (selLayout != null) {
 		<aui:field-wrapper helpMessage="category-display-page-help" label="category-display-page">
 			<p class="text-default">
 				<span class="<%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
-					<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+					<clay:icon
+						aria-label='<%= LanguageUtil.get(request, "remove") %>'
+						cssClass="icon-monospaced"
+						symbol="times"
+					/>
 				</span>
 				<span id="<portlet:namespace />displayPageNameInput">
 					<c:choose>
