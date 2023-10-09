@@ -59,7 +59,9 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 										</aui:a>
 
 										<c:if test="<%= commerceOrderNote.isRestricted() %>">
-											<clay:icon aria-label='<%= LanguageUtil.get(request, "private") %>' symbol="lock" />
+											<span class="c-inner" tabindex="-1">
+												<clay:icon aria-label='<%= LanguageUtil.get(request, "private") %>' symbol="lock" />
+											</span>
 										</c:if>
 
 										<%
