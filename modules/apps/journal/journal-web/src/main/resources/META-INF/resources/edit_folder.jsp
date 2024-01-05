@@ -162,49 +162,26 @@ renderResponse.setTitle(title);
 				}
 				%>
 
-				<div class="form-group">
-					<aui:input name="folderName" type="resource" value="<%= parentFolderName %>" />
-
-					<clay:button
-						displayType="secondary"
-						id='<%= liferayPortletResponse.getNamespace() + "selectFolderButton" %>'
-						label="select"
-					/>
-
-					<liferay-frontend:component
-						context='<%=
-							HashMapBuilder.<String, Object>put(
-								"inputName", "parentFolderId"
-							).put(
-								"selectFolderURL",
-								PortletURLBuilder.createRenderURL(
-									renderResponse
-								).setMVCPath(
-									"/select_folder.jsp"
-								).setParameter(
-									"folderId", folderId
-								).setParameter(
-									"parentFolderId", parentFolderId
-								).setWindowState(
-									LiferayWindowState.POP_UP
-								).buildString()
-							).build()
-						%>'
-						module="js/SelectFolderButton"
-					/>
-
-					<%
-					String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentFolderId', 'folderName', this, '" + liferayPortletResponse.getNamespace() + "');";
-					%>
-
-					<clay:button
-						disabled="<%= parentFolderId <= 0 %>"
-						displayType="secondary"
-						id='<%= liferayPortletResponse.getNamespace() + "removeFolderButton" %>'
-						label="remove"
-						onClick="<%= taglibRemoveFolder %>"
-					/>
-				</div>
+				<liferay-frontend:folder-selector
+					folderId="parentFolderId"
+					folderInputLabel='<%= LanguageUtil.get(request, "folder-name") %>'
+					folderLabel="<%= parentFolderName %>"
+					folderValue="<%= parentFolderId %>"
+					selectEventName="selectFolder"
+					selectFolderURL='<%=
+						PortletURLBuilder.createRenderURL(
+							renderResponse
+						).setMVCPath(
+							"/select_folder.jsp"
+						).setParameter(
+							"folderId", folderId
+						).setParameter(
+							"parentFolderId", parentFolderId
+						).setWindowState(
+							LiferayWindowState.POP_UP
+						).buildString()
+					%>'
+				/>
 			</liferay-frontend:fieldset>
 		</c:if>
 
