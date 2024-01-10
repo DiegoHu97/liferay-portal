@@ -100,6 +100,7 @@ renderResponse.setTitle(headerTitle);
 						</liferay-portlet:renderURL>
 
 						<liferay-frontend:folder-selector
+							parentFolderId="parentFolderId"
 							parentFolderLabel="<%= parentFolderName %>"
 							parentFolderValue="<%= parentFolderId %>"
 							selectFolderURL="<%= selectFolderURL %>"
