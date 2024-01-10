@@ -259,7 +259,7 @@ export function SelectLayoutTree({
 								}
 							>
 								{multiSelection && !item.disabled && (
-									<Checkbox
+									<ClayCheckbox
 										checked={selection.has(item.id)}
 										onChange={(event) =>
 											handleMultipleSelectionChange(
@@ -325,7 +325,7 @@ export function SelectLayoutTree({
 										}
 									>
 										{multiSelection && !item.disabled && (
-											<Checkbox
+											<ClayCheckbox
 												checked={selection.has(item.id)}
 												onChange={(event) =>
 													handleMultipleSelectionChange(
@@ -417,8 +417,6 @@ export function SelectLayoutTree({
 	);
 }
 
-const Checkbox = (props) => <ClayCheckbox {...props} />;
-
 function SearchResults({
 	checkDisplayPage,
 	filter,
@@ -481,7 +479,7 @@ function SearchResult({layout, multiSelection, onSelect, selection}) {
 	return (
 		<div className="align-items-center d-flex pb-2">
 			{multiSelection && (
-				<Checkbox
+				<ClayCheckbox
 					checked={selection.has(layout.id)}
 					containerProps={{className: 'mr-3 my-0'}}
 					disabled={layout.disabled}
