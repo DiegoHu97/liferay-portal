@@ -86,33 +86,16 @@ portletDisplay.setURLBackTitle("bookmarks");
 								<aui:input name="preferences--folderColumns--" type="hidden" />
 								<aui:input name="preferences--entryColumns--" type="hidden" />
 
-								<div class="form-group">
-									<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
+								<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+									<portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" />
+								</liferay-portlet:renderURL>
 
-									<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-										<portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" />
-									</liferay-portlet:renderURL>
-
-									<div class="c-gap-1 d-flex">
-										<clay:button
-											additionalProps='<%=
-												HashMapBuilder.<String, Object>put(
-													"selectFolderURL", selectFolderURL
-												).build()
-											%>'
-											displayType="secondary"
-											id='<%= liferayPortletResponse.getNamespace() + "selectFolderButton" %>'
-											label="select"
-											propsTransformer="js/SelectRootFolderButtonPropsTransformer"
-										/>
-
-										<%
-										String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('rootFolderId', 'rootFolderName', this, '" + liferayPortletResponse.getNamespace() + "');";
-										%>
-
-										<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-									</div>
-								</div>
+								<liferay-frontend:folder-selector
+									parentFolderId="rootFolderId"
+									parentFolderLabel="<%= rootFolderName %>"
+									parentFolderValue="<%= rootFolderId %>"
+									selectFolderURL="<%= selectFolderURL %>"
+								/>
 
 								<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= bookmarksGroupServiceOverriddenConfiguration.showFoldersSearch() %>" />
 
