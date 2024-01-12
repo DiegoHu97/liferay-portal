@@ -261,6 +261,7 @@ export function SelectLayoutTree({
 								{multiSelection && !item.disabled && (
 									<ClayCheckbox
 										checked={selection.has(item.id)}
+										containerProps={{className: 'my-0'}}
 										onChange={(event) =>
 											handleMultipleSelectionChange(
 												item,
@@ -327,6 +328,9 @@ export function SelectLayoutTree({
 										{multiSelection && !item.disabled && (
 											<ClayCheckbox
 												checked={selection.has(item.id)}
+												containerProps={{
+													className: 'my-0',
+												}}
 												onChange={(event) =>
 													handleMultipleSelectionChange(
 														item,
