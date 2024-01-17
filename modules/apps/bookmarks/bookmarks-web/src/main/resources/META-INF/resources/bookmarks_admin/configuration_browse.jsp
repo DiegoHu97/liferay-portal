@@ -92,8 +92,10 @@ portletDisplay.setURLBackTitle("bookmarks");
 
 								<liferay-frontend:folder-selector
 									parentFolderId="rootFolderId"
+									parentFolderInTrash="<%= parentFolderInTrash %>"
 									parentFolderLabel="<%= rootFolderName %>"
 									parentFolderValue="<%= rootFolderId %>"
+									selectEventName="selectFolder"
 									selectFolderURL="<%= selectFolderURL %>"
 								/>
 

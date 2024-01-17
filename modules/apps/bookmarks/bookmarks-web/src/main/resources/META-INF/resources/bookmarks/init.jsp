@@ -14,6 +14,7 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
+boolean parentFolderInTrash = false;
 long rootFolderId = bookmarksGroupServiceOverriddenConfiguration.rootFolderId();
 String rootFolderName = StringPool.BLANK;
 
@@ -22,6 +23,8 @@ if (rootFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		BookmarksFolder rootFolder = BookmarksFolderLocalServiceUtil.getFolder(rootFolderId);
 
 		rootFolderName = rootFolder.getName();
+
+		parentFolderInTrash = rootFolder.isInTrash();
 
 		if (rootFolder.getGroupId() != scopeGroupId) {
 			rootFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;

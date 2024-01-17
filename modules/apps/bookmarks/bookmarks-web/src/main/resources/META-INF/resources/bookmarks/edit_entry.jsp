@@ -95,6 +95,7 @@ renderResponse.setTitle(headerTitle);
 								parentFolderId="folderId"
 								parentFolderLabel="<%= folderName %>"
 								parentFolderValue="<%= folderId %>"
+								selectEventName="selectFolder"
 								selectFolderURL="<%= selectFolderURL %>"
 							/>
 						</c:if>

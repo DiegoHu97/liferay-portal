@@ -103,6 +103,7 @@ renderResponse.setTitle(headerTitle);
 							parentFolderId="parentFolderId"
 							parentFolderLabel="<%= parentFolderName %>"
 							parentFolderValue="<%= parentFolderId %>"
+							selectEventName="selectFolder"
 							selectFolderURL="<%= selectFolderURL %>"
 						/>
 

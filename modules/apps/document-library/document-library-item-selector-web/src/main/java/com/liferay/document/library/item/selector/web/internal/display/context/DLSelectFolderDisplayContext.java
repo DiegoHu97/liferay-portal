@@ -204,13 +204,22 @@ public class DLSelectFolderDisplayContext {
 
 	public Map<String, Object> getSelectorButtonData(Folder folder) {
 		return HashMapBuilder.<String, Object>put(
-			"folderid",
+			"folder-id",
 			() -> {
 				if (folder != null) {
 					return folder.getFolderId();
 				}
 
 				return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			}
+		).put(
+			"folder-name",
+			() -> {
+				if (folder != null) {
+					return folder.getName();
+				}
+
+				return getFolderName();
 			}
 		).put(
 			"folderissupportsmetadata",
@@ -229,15 +238,6 @@ public class DLSelectFolderDisplayContext {
 				}
 
 				return true;
-			}
-		).put(
-			"foldername",
-			() -> {
-				if (folder != null) {
-					return folder.getName();
-				}
-
-				return getFolderName();
 			}
 		).put(
 			"repositoryid", getRepositoryId()
