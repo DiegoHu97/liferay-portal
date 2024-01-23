@@ -20,8 +20,8 @@ export default function FolderSelector({
 	showRemoveButton,
 }) {
 	const [folderName, setFolderName] = useState(initialFolderName);
-	const [showNotFoundAlert, setShowNotFoundAlert] = useState(folderNotFound);
-	const [showTrashAlert, setShowTrashAlert] = useState(folderInTrash);
+	const [notFound, setNotFound] = useState(folderNotFound);
+	const [inTrash, setInTrash] = useState(folderInTrash);
 
 	const removeButtonDisabled =
 		!folderName || folderName === initialFolderName;
@@ -36,8 +36,8 @@ export default function FolderSelector({
 					).value = selectedItem.folderId;
 
 					setFolderName(selectedItem.folderName);
-					setShowTrashAlert(false);
-					setShowNotFoundAlert(false);
+					setInTrash(false);
+					setNotFound(false);
 				}
 			},
 			selectEventName: `${portletNamespace}${selectEventName}`,
@@ -58,7 +58,7 @@ export default function FolderSelector({
 				/>
 			</ClayForm.Group>
 
-			{showTrashAlert ? (
+			{inTrash ? (
 				<ClayAlert displayType="warning">
 					{Liferay.Language.get(
 						'the-selected-root-folder-is-in-the-recycle-bin-please-remove-it-or-select-another-one'
@@ -66,7 +66,7 @@ export default function FolderSelector({
 				</ClayAlert>
 			) : null}
 
-			{showNotFoundAlert ? (
+			{notFound ? (
 				<ClayAlert displayType="warning">
 					{Liferay.Language.get(
 						'the-selected-root-folder-cannot-be-found-please-select-another-one'
