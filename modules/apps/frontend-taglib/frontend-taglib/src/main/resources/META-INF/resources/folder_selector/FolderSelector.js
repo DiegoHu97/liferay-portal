@@ -15,17 +15,16 @@ export default function FolderSelector({
 	folderNotFound,
 	label,
 	portletNamespace,
-	removeButtonDisabled: initialRemoveButtonDisabled,
 	selectEventName,
 	selectFolderURL,
 	showRemoveButton,
 }) {
 	const [folderName, setFolderName] = useState(initialFolderName);
-	const [removeButtonDisabled, setRemoveButtonDisabled] = useState(
-		initialRemoveButtonDisabled
-	);
 	const [showNotFoundAlert, setShowNotFoundAlert] = useState(folderNotFound);
 	const [showTrashAlert, setShowTrashAlert] = useState(folderInTrash);
+
+	const removeButtonDisabled =
+		!folderName || folderName === initialFolderName;
 
 	const handleSelectFolderButtonClick = () =>
 		openSelectionModal({
@@ -37,7 +36,6 @@ export default function FolderSelector({
 					).value = selectedItem.folderId;
 
 					setFolderName(selectedItem.folderName);
-					setRemoveButtonDisabled(false);
 					setShowTrashAlert(false);
 					setShowNotFoundAlert(false);
 				}
@@ -94,7 +92,6 @@ export default function FolderSelector({
 							).value = '0';
 
 							setFolderName('');
-							setRemoveButtonDisabled(true);
 						}}
 					>
 						{Liferay.Language.get('remove')}
