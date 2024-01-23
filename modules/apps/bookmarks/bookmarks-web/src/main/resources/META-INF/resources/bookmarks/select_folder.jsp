@@ -95,9 +95,9 @@ if (folder != null) {
 						cssClass="selector-button"
 						data='<%=
 							HashMapBuilder.<String, Object>put(
-								"entityid", curFolder.getFolderId()
+								"resource-id", curFolder.getFolderId()
 							).put(
-								"entityname", curFolder.getName()
+								"resource-name", curFolder.getName()
 							).build()
 						%>'
 						value="choose"
@@ -120,9 +120,9 @@ if (folder != null) {
 					cssClass="selector-button"
 					data='<%=
 						HashMapBuilder.<String, Object>put(
-							"entityid", folderId
+							"resource-id", folderId
 						).put(
-							"entityname", folderName
+							"resource-name", folderName
 						).build()
 					%>'
 					value="choose-this-folder"
