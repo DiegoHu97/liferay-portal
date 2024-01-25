@@ -268,7 +268,7 @@ export default function propsTransformer({
 			height: '480px',
 			id: `${portletNamespace}selectFolder`,
 			onSelect(selectedItem) {
-				const newFolderId = selectedItem.folderid;
+				const newFolderId = selectedItem.resourceId;
 
 				const form = document.getElementById(`${portletNamespace}fm2`);
 
