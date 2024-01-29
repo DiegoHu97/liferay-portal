@@ -143,7 +143,7 @@ if (portletTitleBasedNavigation) {
 				onSelect: function (event) {
 					Liferay.Util.setFormValues(form, {
 						categoryName: Liferay.Util.unescape(event.name),
-						mbCategoryId: event.categoryid,
+						mbCategoryId: event.resourceId,
 					});
 				},
 				selectEventName: '<portlet:namespace />selectCategory',
