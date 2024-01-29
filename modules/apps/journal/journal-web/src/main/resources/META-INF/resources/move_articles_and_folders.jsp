@@ -20,7 +20,6 @@ JournalMoveEntriesDisplayContext journalMoveEntriesDisplayContext = new JournalM
 	name="fm"
 >
 	<aui:input name="redirect" type="hidden" value="<%= journalMoveEntriesDisplayContext.getRedirect() %>" />
-	<aui:input name="newFolderId" type="hidden" value="<%= journalMoveEntriesDisplayContext.getNewFolderId() %>" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
@@ -153,12 +152,20 @@ JournalMoveEntriesDisplayContext journalMoveEntriesDisplayContext = new JournalM
 
 			<aui:input name="rowIdsJournalArticle" type="hidden" value="<%= ListUtil.toString(validMoveArticles, JournalArticle.ARTICLE_ID_ACCESSOR) %>" />
 
-			<aui:input label="new-folder" name="folderName" title="new-folder" type="resource" value="<%= journalMoveEntriesDisplayContext.getNewFolderName() %>" />
+			<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="mvcPath" value="/select_folder.jsp" />
+				<portlet:param name="folderId" value="<%= String.valueOf(journalMoveEntriesDisplayContext.getNewFolderId()) %>" />
+			</portlet:renderURL>
 
-			<clay:button
-				displayType="secondary"
-				id='<%= liferayPortletResponse.getNamespace() + "selectFolderButton" %>'
-				label="select"
+			<liferay-frontend:resource-selector
+				inputLabel='<%= LanguageUtil.get(request, "new-folder") %>'
+				inputName="newFolderId"
+				modalTitle='<%= LanguageUtil.get(request, "select-folder") %>'
+				resourceName="<%= journalMoveEntriesDisplayContext.getNewFolderName() %>"
+				resourceValue="<%= journalMoveEntriesDisplayContext.getNewFolderId() %>"
+				selectEventName="selectFolder"
+				selectResourceURL="<%= selectFolderURL %>"
+				showRemoveButton="<%= false %>"
 			/>
 		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
@@ -170,19 +177,3 @@ JournalMoveEntriesDisplayContext journalMoveEntriesDisplayContext = new JournalM
 		/>
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
-
-<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/select_folder.jsp" />
-	<portlet:param name="folderId" value="<%= String.valueOf(journalMoveEntriesDisplayContext.getNewFolderId()) %>" />
-</portlet:renderURL>
-
-<liferay-frontend:component
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"inputName", "newFolderId"
-		).put(
-			"selectFolderURL", selectFolderURL
-		).build()
-	%>'
-	module="js/SelectFolderButton"
-/>
