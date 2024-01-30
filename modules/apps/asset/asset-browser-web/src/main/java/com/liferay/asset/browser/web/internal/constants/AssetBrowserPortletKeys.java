@@ -11,6 +11,6 @@ package com.liferay.asset.browser.web.internal.constants;
 public class AssetBrowserPortletKeys {
 
 	public static final String ASSET_BROWSER =
-		"com_liferay_asset_browser_web_portlet_AssetBrowserPortlet";
+		"com_liferay_asset_browser_web_portlet_AssetBrowserPortlett";
 
 }
