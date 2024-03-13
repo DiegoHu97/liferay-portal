@@ -10,19 +10,23 @@ import {JournalPage} from './JournalPage';
 export class JournalEditArticleTranslationsPage {
 	readonly page: Page;
 
+	readonly changeLocale: Locator;
 	readonly concurrentUserErrorMessage: Locator;
 	readonly journalPage: JournalPage;
+	readonly selectLocaleButton: Locator;
 	readonly publishButton: Locator;
 	readonly titleInput: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
+		this.changeLocale = page.getByRole('option', { name: 'Arabic Language: Not Translated' });
 		this.concurrentUserErrorMessage = page.getByText(
 			'Another user has made changes since you started editing. Publish this version to save it and overwrite the recent changes.'
 		);
 		this.journalPage = new JournalPage(page);
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
+		this.selectLocaleButton = page.getByLabel('Select a language, current language: English.');
 		this.titleInput = page.locator(
 			'#_com_liferay_translation_web_internal_portlet_TranslationPortlet_infoField--JournalArticle_title--0'
 		);
@@ -34,6 +38,12 @@ export class JournalEditArticleTranslationsPage {
 		await this.concurrentUserErrorMessage.waitFor();
 
 		await expect(this.concurrentUserErrorMessage).toBeVisible();
+	}
+
+	async changeArticleLocale() {
+		await this.selectLocaleButton.click();
+
+		await this.changeLocale.click();
 	}
 
 	async editBasicArticleTranslations(title: string, url: string) {

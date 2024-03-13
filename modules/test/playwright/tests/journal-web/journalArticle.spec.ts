@@ -28,6 +28,33 @@ const PERMISSIONS_LOCATORS = [
 	'#guest_ACTION_PERMISSIONS',
 ];
 
+test('LPD-13732: This is a test for reset translations button in web content', async ({
+	journalEditArticlePage,
+	journalEditArticleTranslationsPage,
+	journalPage,
+	page,
+}) => {
+	await journalPage.goto();
+
+	const title = getRandomString();
+
+	await journalEditArticlePage.publishNewBasicArticle(title);
+
+	const article = page
+		.locator(
+			'#_com_liferay_journal_web_portlet_JournalPortlet_articlesSearchContainer .list-group-item'
+		)
+		.filter({hasText: title});
+
+	await article.waitFor();
+
+	await journalEditArticlePage.editBasicArticle(title);
+
+	await journalEditArticleTranslationsPage.changeArticleLocale();
+
+	await journalPage.deleteJournalArticle(title);
+});
+
 test('LPD-17245: Add error message in Translation for concurrent users', async ({
 	journalEditArticlePage,
 	journalEditArticleTranslationsPage,
@@ -110,3 +137,5 @@ test('LPD-17782: This is a test for bulk permissions of web content', async ({
 	await journalPage.deleteJournalArticle(title1);
 	await journalPage.deleteJournalArticle(title2);
 });
+
+
