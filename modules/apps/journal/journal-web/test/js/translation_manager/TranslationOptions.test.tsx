@@ -42,17 +42,6 @@ const DEFAULT_PROPS = {
 	selectedLanguageId: 'en_US',
 };
 
-const TRANSLATED_PROPS = {
-	...DEFAULT_PROPS,
-	selectedLanguageId: 'ar_SA',
-	translationProgress: {
-		totalItems: 4,
-		translatedItems: {
-			ar_SA: 1,
-		},
-	},
-};
-
 const renderDefaultComponent = () =>
 	render(<TranslationOptions {...DEFAULT_PROPS} />);
 describe('TranslationOptions', () => {
