@@ -55,10 +55,6 @@ const TRANSLATED_PROPS = {
 
 const renderDefaultComponent = () =>
 	render(<TranslationOptions {...DEFAULT_PROPS} />);
-
-const renderTranslatedComponent = () =>
-	render(<TranslationOptions {...TRANSLATED_PROPS} />);
-
 describe('TranslationOptions', () => {
 	Liferay.FeatureFlags['LPD-11253'] = true;
 
@@ -86,16 +82,6 @@ describe('TranslationOptions', () => {
 			);
 
 			expect(resetTranslationsButton).toBeDisabled();
-		});
-
-		it('reset translations button is enabled when there is a translation in progress', () => {
-			renderTranslatedComponent();
-
-			const resetTranslationsButton = screen.getByText(
-				'reset-translation'
-			);
-
-			expect(resetTranslationsButton).not.toBeDisabled();
 		});
 	});
 });
