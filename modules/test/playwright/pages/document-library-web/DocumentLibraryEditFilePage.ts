@@ -13,6 +13,7 @@ export class DocumentLibraryEditFilePage {
 	readonly backButton: Locator;
 	readonly publishDateSelector: Locator;
 	readonly saveButton: Locator;
+	readonly selectForUpdateButton: Locator;
 	readonly publishButton: Locator;
 	readonly scheduleButton: Locator;
 	readonly titleSelector: Locator;
@@ -21,13 +22,14 @@ export class DocumentLibraryEditFilePage {
 	constructor(page: Page) {
 		this.documentLibraryPage = new DocumentLibraryPage(page);
 		this.page = page;
-		this.backButton = page.getByRole('link', { name: 'Back' });
+		this.backButton = page.getByRole('link', {name: 'Back'});
 		this.publishButton = page.getByRole('button', {
 			exact: true,
 			name: 'Publish',
 		});
 		this.publishDateSelector = page.getByLabel('Publish Date');
 		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
+		this.selectForUpdateButton = page.getByLabel('Upload');
 		this.scheduleButton = page.getByRole('button', {name: 'Schedule'});
 		this.titleSelector = page.getByLabel('Title');
 		this.permissionViewSelector = page.getByLabel('Viewable by');
@@ -38,16 +40,31 @@ export class DocumentLibraryEditFilePage {
 
 		await this.documentLibraryPage.goToCreateNewFile();
 	}
-	async goBack(){
-		await this.backButton.click();
+
+	async assertPrivateFileIconInSelectPopUp(assetType: string) {
+		await expect(
+			this.page
+				.frameLocator(`iframe[title="Select ${assetType}"]`)
+				.getByLabel('Not Visible to Guest Users')
+				.locator('use')
+		).toBeVisible({timeout: 1000});
 	}
 
-	async assertPrivateContentIcon() {
+	async assertPrivateFileIcon() {
 		await expect(
 			this.page.getByLabel('Not Visible to Guest Users').locator('use')
 		).toBeVisible({timeout: 1000});
 	}
+	async goBack() {
+		await this.backButton.click();
+	}
 
+	async goToNewFileDifferentType(type: string) {
+		await this.documentLibraryPage.goto();
+
+		await this.documentLibraryPage.goToCreateNewFileWithDifferentType(type);
+
+	}
 	async publishNewFileWithScheduleDate(scheduleDate: string, title: string) {
 		await this.goto();
 
@@ -56,7 +73,7 @@ export class DocumentLibraryEditFilePage {
 		const isClosed =
 			!(await this.scheduleButton.getAttribute('aria-expanded')) ||
 			(await this.scheduleButton.getAttribute('aria-expanded')) ===
-				'false';
+			'false';
 
 		if (isClosed) {
 			await this.scheduleButton.click();
@@ -79,6 +96,7 @@ export class DocumentLibraryEditFilePage {
 			await this.publishButton.click();
 		}
 	}
+
 	async publishNewFileWithoutGuestViewPermission(title: string) {
 		await this.goto();
 
@@ -87,6 +105,4 @@ export class DocumentLibraryEditFilePage {
 		await this.publishButton.click();
 
 	}
-
-
 }

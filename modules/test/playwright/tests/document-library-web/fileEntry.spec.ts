@@ -62,9 +62,11 @@ testFeatureFlagsEnabled(
 		await documentLibraryPage.assertPrivateContentIcon();
 
 		await documentLibraryPage.changeView('table');
+
 		await documentLibraryPage.assertPrivateContentIcon();
 
 		await documentLibraryPage.changeView('list');
+
 		await documentLibraryPage.assertPrivateContentIcon();
 
 		await documentLibraryPage.deleteAllFileEntries();
@@ -83,13 +85,45 @@ testFeatureFlagsEnabled(
 		);
 
 		await documentLibraryPage.editFileEntry(title);
-		await documentLibraryEditFilePage.assertPrivateContentIcon();
+
+		await documentLibraryEditFilePage.assertPrivateFileIcon();
+
 		await documentLibraryEditFilePage.goBack();
 
 		await page.getByRole('link', { name: title }).click();
-		await documentLibraryEditFilePage.assertPrivateContentIcon();
-		await documentLibraryEditFilePage.goBack();
+
+		await documentLibraryEditFilePage.assertPrivateFileIcon();
 
 		await documentLibraryPage.deleteAllFileEntries();
+	}
+);
+
+testFeatureFlagsEnabled(
+	'LPD-16313 itemselector',
+	async ({documentLibraryEditDocumentTypesPage,documentLibraryEditFilePage, documentLibraryPage, page}) => {
+
+		const dTypeTitle = getRandomString();
+		const title = getRandomString();
+
+		await documentLibraryEditDocumentTypesPage.createNewDLTypeWithUploadField(
+			dTypeTitle
+		);
+
+		await documentLibraryEditFilePage.publishNewFileWithoutGuestViewPermission(
+			title
+		);
+
+		await documentLibraryEditFilePage.goToNewFileDifferentType(
+			dTypeTitle
+		);
+
+		await documentLibraryEditFilePage.selectForUpdateButton.click();
+
+
+		await documentLibraryEditFilePage.assertPrivateFileIconInSelectPopUp('Document');
+
+		await documentLibraryPage.deleteAllFileEntries();
+
+		await documentLibraryPage.deleteDocumentType(dTypeTitle);
 	}
 );
