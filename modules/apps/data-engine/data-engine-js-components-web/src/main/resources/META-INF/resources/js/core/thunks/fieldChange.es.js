@@ -89,6 +89,21 @@ export default function fieldChange({
 
 		dispatch({payload: editedPages, type: EVENT_TYPES.PAGE.UPDATE});
 
+		if (Liferay.FeatureFlags['LPD-11228']) {
+			if (
+				fieldInstance.type === 'numeric' ||
+				fieldInstance.type === 'text' ||
+				fieldInstance.type === 'rich_text'
+			) {
+				dispatch({type: EVENT_TYPES.HISTORY.LOCK});
+			}
+			else {
+				Liferay.fire('journal:storeState', {
+					fieldName: fieldInstance.label,
+				});
+			}
+		}
+
 		if (evaluable && (viewMode || needsPageEvaluation(fieldName))) {
 			try {
 				disableSubmitButton(submitButtonId);
