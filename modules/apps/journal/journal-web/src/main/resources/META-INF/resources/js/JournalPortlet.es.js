@@ -261,10 +261,6 @@ export default function _JournalPortlet({
 	const handlePublishButtonClick = (event) => {
 		lockHolder.lock?.lock();
 
-		if (Liferay.FeatureFlags['LPD-11228']) {
-			return;
-		}
-
 		document
 			.querySelectorAll('.journal-alert-container')
 			.forEach((alertElement) => {
