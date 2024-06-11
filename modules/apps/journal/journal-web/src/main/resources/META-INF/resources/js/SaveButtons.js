@@ -173,7 +173,7 @@ export default function SaveButtons({
 
 	return (
 		<div className="d-flex">
-			{!Liferay.FeatureFlags['LPS-141392'] && !editingDefaultValues ? (
+			{!Liferay.FeatureFlags['LPD-11228'] && !editingDefaultValues ? (
 				<ClayButton
 					className="mr-3"
 					displayType="secondary"
