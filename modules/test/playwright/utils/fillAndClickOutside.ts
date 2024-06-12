@@ -6,7 +6,9 @@
 import getRandomString from './getRandomString';
 
 export default async function fillAndClickOutside(page, element, content?) {
+	const value = content || getRandomString();
+
 	await element.click();
-	await element.fill(content || getRandomString());
+	await element.fill(value);
 	await page.locator('body').click();
 }
