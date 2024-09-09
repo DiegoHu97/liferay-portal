@@ -92,6 +92,26 @@ export default function SaveButtons({
 					defaultLanguageId.replaceAll('_', '-')
 				)
 			);
+
+			Liferay.componentReady(
+				`${portletNamespace}dataEngineLayoutRenderer`
+			).then((dataEngineLayoutRenderer) => {
+				const dataEngineLayoutRendererRef =
+					dataEngineLayoutRenderer?.reactComponentRef;
+
+				return dataEngineLayoutRendererRef.current.validate();
+			});
+		}
+		else {
+			Liferay.Form.get(formId).formValidator.validate();
+			Liferay.componentReady(
+				`${portletNamespace}dataEngineLayoutRenderer`
+			).then((dataEngineLayoutRenderer) => {
+				const dataEngineLayoutRendererRef =
+					dataEngineLayoutRenderer?.reactComponentRef;
+
+				return dataEngineLayoutRendererRef.current.validate();
+			});
 		}
 	};
 
@@ -161,6 +181,18 @@ export default function SaveButtons({
 				}
 			}
 		);
+	};
+
+	const validateRequiredFields = () => {
+		Liferay.Form.get(formId).formValidator.validate();
+		Liferay.componentReady(
+			`${portletNamespace}dataEngineLayoutRenderer`
+		).then((dataEngineLayoutRenderer) => {
+			const dataEngineLayoutRendererRef =
+				dataEngineLayoutRenderer?.reactComponentRef;
+
+			return dataEngineLayoutRendererRef.current.validate();
+		});
 	};
 
 	useEffect(() => {
@@ -281,6 +313,28 @@ export default function SaveButtons({
 										defaultLanguageId.replaceAll('_', '-')
 									)
 								);
+
+								Liferay.componentReady(
+									`${portletNamespace}dataEngineLayoutRenderer`
+								).then((dataEngineLayoutRenderer) => {
+									const dataEngineLayoutRendererRef =
+										dataEngineLayoutRenderer?.reactComponentRef;
+
+									return dataEngineLayoutRendererRef.current.validate();
+								});
+							}
+							else {
+								Liferay.Form.get(
+									formId
+								).formValidator.validate();
+								Liferay.componentReady(
+									`${portletNamespace}dataEngineLayoutRenderer`
+								).then((dataEngineLayoutRenderer) => {
+									const dataEngineLayoutRendererRef =
+										dataEngineLayoutRenderer?.reactComponentRef;
+
+									return dataEngineLayoutRendererRef.current.validate();
+								});
 							}
 						}}
 						symbolLeft="date-time"
