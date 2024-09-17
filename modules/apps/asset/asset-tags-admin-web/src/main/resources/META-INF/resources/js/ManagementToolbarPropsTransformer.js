@@ -25,7 +25,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		const form = document.getElementById(`${portletNamespace}fm`);
 
 		if (form) {
-			location.href = itemData?.mergeTagsURL.replace(
+			location.href = itemData?.mergeTagsURL.replaceAll(
 				escape('[$MERGE_TAGS_IDS$]'),
 				getCheckedCheckboxes(form, `${portletNamespace}allRowIds`)
 			);
